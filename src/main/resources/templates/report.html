@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Reports', ~{::link})}">
+    <link th:href="@{/css/rashCSS/report.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar('reports')}"></div>
+    <div id="page-content-wrapper" >
+    <div class="main-area">
+
+        <main class="page-content">
+
+            <!-- Main empty state -->
+            <div class="sms-card empty-page-card">
+                <div class="empty-page-inner">
+                    <div class="empty-icon-wrap empty-icon--indigo">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                    <h2 class="empty-title">No Reports Available</h2>
+                    <p class="empty-desc">
+                        Reports and analytics are not yet available.<br>
+                        This section will include student, course, and fee collection reports.
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

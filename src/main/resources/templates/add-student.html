@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Add New Student', ~{::link})}">
+  <link th:href="@{/css/studentCSS/add-student.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+  <!-- ── Sidebar -->
+  <div th:replace="~{fragments/layout :: sidebar('students')}"></div>
+  <div  id="page-content-wrapper">
+    <!--  Main Area  -->
+    <div class="main-area">
+      <main class="page-content">
+
+        <!--  Page Header  -->
+        <div class="sms-page-header">
+          <div>
+            <h1 class="sms-page-title">Add New Student</h1>
+            <p class="sms-page-sub">Fill in the details below to register a new student.</p>
+          </div>
+          <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back to List
+          </a>
+        </div>
+
+        <!--  Form Card  -->
+        <div class="sms-card form-card">
+
+          <div class="form-card__header">
+            <div class="form-card__header-icon">
+              <i class="bi bi-person-plus-fill"></i>
+            </div>
+            <span>Student Details</span>
+          </div>
+
+          <div class="form-card__body">
+            <form th:action="@{/students/save}" method="post" th:object="${studentDto}" novalidate>
+
+              <!-- Row 1: First Name + Last Name -->
+              <div class="form-row">
+
+                <div class="field-group">
+                  <label for="firstName" class="field-label">
+                    First Name <span class="required-star">*</span>
+                  </label>
+                  <div class="field-input-wrap">
+                    <i class="bi bi-person field-icon"></i>
+                    <input type="text"
+                           id="firstName"
+                           th:field="*{firstName}"
+                           class="field-input"
+                           th:classappend="${#fields.hasErrors('firstName')} ? ' field-input--error'"
+                           placeholder="e.g. John"
+                           required/>
+                  </div>
+                  <span class="field-error"
+                        th:if="${#fields.hasErrors('firstName')}"
+                        th:errors="*{firstName}"></span>
+                </div>
+
+                <div class="field-group">
+                  <label for="lastName" class="field-label">
+                    Last Name <span class="required-star">*</span>
+                  </label>
+                  <div class="field-input-wrap">
+                    <i class="bi bi-person field-icon"></i>
+                    <input type="text"
+                           id="lastName"
+                           th:field="*{lastName}"
+                           class="field-input"
+                           th:classappend="${#fields.hasErrors('lastName')} ? ' field-input--error'"
+                           placeholder="e.g. Doe"
+                           required/>
+                  </div>
+                  <span class="field-error"
+                        th:if="${#fields.hasErrors('lastName')}"
+                        th:errors="*{lastName}"></span>
+                </div>
+
+              </div>
+
+              <!-- Row 2: Email + Phone -->
+              <div class="form-row">
+
+                <div class="field-group">
+                  <label for="email" class="field-label">
+                    Email Address <span class="required-star">*</span>
+                  </label>
+                  <div class="field-input-wrap">
+                    <i class="bi bi-envelope field-icon"></i>
+                    <input type="email"
+                           id="email"
+                           th:field="*{email}"
+                           class="field-input"
+                           th:classappend="${#fields.hasErrors('email')} ? ' field-input--error'"
+                           placeholder="e.g. john.doe@example.com"
+                           required/>
+                  </div>
+                  <span class="field-error"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}"></span>
+                </div>
+
+                <div class="field-group">
+                  <label for="phone" class="field-label">Phone Number</label>
+                  <div class="field-input-wrap">
+                    <i class="bi bi-telephone field-icon"></i>
+                    <input type="tel"
+                           id="phone"
+                           th:field="*{phoneNumber}"
+                           class="field-input"
+                           placeholder="e.g. +254 700 000 000"/>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Row 3: Address full width -->
+              <div class="field-group field-group--full">
+                <label for="address" class="field-label">Address</label>
+                <div class="field-input-wrap">
+                  <i class="bi bi-geo-alt field-icon field-icon--top"></i>
+                  <textarea id="address"
+                            th:field="*{address}"
+                            class="field-input field-textarea"
+                            th:classappend="${#fields.hasErrors('address')} ? ' field-input--error'"
+                            rows="3"
+                            placeholder="Enter full address..."></textarea>
+                </div>
+                <span class="field-error"
+                      th:if="${#fields.hasErrors('address')}"
+                      th:errors="*{address}"></span>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <button type="reset" class="sms-btn sms-btn-ghost">
+                  <i class="bi bi-arrow-counterclockwise"></i> Reset
+                </button>
+                <button type="submit" class="sms-btn sms-btn-primary">
+                  <i class="bi bi-save"></i> Save Student
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+
+</body>
+</html>

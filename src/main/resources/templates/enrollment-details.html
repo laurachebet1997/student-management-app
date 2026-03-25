@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Enrollment Details', ~{::link})}">
+  <link th:href="@{/css/enrollCSS/enroll-details.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+
+  <!-- ── Sidebar -->
+  <div th:replace="~{fragments/layout :: sidebar('enrollments')}"></div>
+  <div id="page-content-wrapper">
+  <!-- ── Main Area -->
+    <div class="main-area">
+      <main class="page-content">
+        <!-- ── Page Header  -->
+        <div class="sms-page-header">
+          <div>
+            <h1 class="sms-page-title">Enrollment Details</h1>
+            <p class="sms-page-sub">Overview of courses, fees, and student information.</p>
+          </div>
+          <!-- Dynamic back button -->
+          <a th:href="${source == 'dashboard'} ? @{/dashboard} : @{/enrollments/enrollmentList}"
+             class="sms-btn sms-btn-ghost">
+            <i class="bi bi-arrow-left"></i>
+            <span th:text="${source == 'dashboard'} ? 'Back to Dashboard' : 'Back to Enrolled Students'">Back</span>
+          </a>
+        </div>
+
+        <!-- ── Two-column layout ──────────────────────── -->
+        <div class="details-grid">
+
+          <!--
+               LEFT: Student Info + Summary
+           -->
+          <aside class="detail-left">
+
+            <!-- Student profile card -->
+            <div class="sms-card">
+
+              <div class="student-profile-header">
+
+                <div class="profile-avatar"
+                     th:text="${enrollmentSummaryDTO.initials}">AB</div>
+                <div class="profile-title-block">
+                  <h2 class="profile-name" th:text="${enrollmentSummaryDTO.studentName}">Student Name</h2>
+                  <span class="profile-email" th:text="${enrollmentSummaryDTO.email}">email@example.com</span>
+                </div>
+              </div>
+
+              <div class="profile-card__body">
+
+                <div class="info-section-title">
+                  <i class="bi bi-person-badge"></i> Student Information
+                </div>
+
+                <div class="info-row">
+                                  <span class="info-row__label">
+                                      <i class="bi bi-person"></i> Full Name
+                                  </span>
+                  <span class="info-row__value"
+                        th:text="${enrollmentSummaryDTO.studentName}">—</span>
+                </div>
+
+                <div class="info-row">
+                                  <span class="info-row__label">
+                                      <i class="bi bi-envelope"></i> Email
+                                  </span>
+                  <a class="info-row__value info-row__link"
+                     th:href="'mailto:' + ${enrollmentSummaryDTO.email}"
+                     th:text="${enrollmentSummaryDTO.email}">—</a>
+                </div>
+
+              </div>
+
+              <!-- Summary stats strip -->
+              <div class="summary-strip">
+                <div class="summary-strip__stat">
+                  <span class="summary-strip__label">Total Courses</span>
+                  <span class="summary-strip__value"
+                        th:text="${enrollmentSummaryDTO.courseCount}">0</span>
+                </div>
+                <div class="summary-strip__divider"></div>
+                <div class="summary-strip__stat">
+                  <span class="summary-strip__label">Total Fee</span>
+                  <span class="summary-strip__value summary-strip__value--fee"
+                        th:text="${'KES ' + #numbers.formatDecimal(enrollmentSummaryDTO.totalFee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+                </div>
+              </div>
+
+            </div>
+
+          </aside>
+
+          <!--
+               RIGHT: Enrolled Courses Table
+          -->
+          <section class="sms-card detail-right">
+
+            <div class="table-toolbar">
+                          <span class="table-label">
+                              <i class="bi bi-journal-check me-2" style="color:var(--primary);"></i>
+                              Enrolled Courses
+                          </span>
+              <span class="course-total-chip">
+                              <span th:text="${enrollmentSummaryDTO.courseCount}">0</span> course(s)
+                          </span>
+            </div>
+
+            <div class="table-responsive-wrap">
+              <table class="sms-table">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Course Name</th>
+                  <th>Description</th>
+                  <th class="fee-col-header">Fee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course, iter : ${enrollmentSummaryDTO.courseList}">
+
+                  <!-- Row number -->
+                  <td>
+                    <span class="row-num" th:text="${iter.count}">1</span>
+                  </td>
+
+                  <!-- Course name + code badge -->
+                  <td>
+                    <div class="course-name-cell">
+                      <div class="course-icon">
+                        <i class="bi bi-book-half"></i>
+                      </div>
+                      <div>
+                                              <span class="course-name-text"
+                                                    th:text="${course.courseName}">Course</span>
+                        <span class="code-badge"
+                              th:if="${course.courseCode != null}"
+                              th:text="${course.courseCode}">C101</span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Description -->
+                  <td>
+                                      <span class="cell-muted desc-truncate"
+                                            th:text="${course.description != null and !course.description.isEmpty() ? course.description : '—'}">—</span>
+                  </td>
+
+                  <!-- Fee -->
+                  <td>
+                                      <span class="fee-value"
+                                            th:text="${'KES ' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+                  </td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Total row footer -->
+            <div class="table-total-footer">
+              <span class="total-label">Total Payable</span>
+              <span class="total-fee-value"
+                    th:text="${'KES ' + #numbers.formatDecimal(enrollmentSummaryDTO.totalFee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+            </div>
+
+          </section>
+
+        </div>
+
+      </main>
+
+
+
+    </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

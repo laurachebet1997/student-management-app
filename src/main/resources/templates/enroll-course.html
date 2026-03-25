@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Enroll Student', ~{::link})}">
+  <link th:href="@{/css/enrollCSS/enroll-course.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+  <!-- ── Sidebar  -->
+  <div th:replace="~{fragments/layout :: sidebar('enroll')}"></div>
+  <div id="page-content-wrapper">
+
+  <!-- ── Main Area -->
+  <div class="main-area">
+    <main class="page-content">
+      <!-- ── Page Header -->
+      <div class="sms-page-header">
+        <div>
+          <h1 class="sms-page-title">Enroll Student to Courses</h1>
+          <p class="sms-page-sub"></p>
+        </div>
+        <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
+          <i class="bi bi-arrow-left"></i> Back to Students
+        </a>
+      </div>
+
+      <!-- ── Form  -->
+      <form th:action="@{/enrollments/enrollCourse}"
+            th:object="${enrollmentDto}"
+            method="post"
+            id="enrollForm">
+
+        <div class="enroll-grid">
+
+          <!--
+               LEFT: Course Selection Table
+           -->
+          <section class="sms-card">
+
+            <div class="panel-header">
+              <div class="panel-header__left">
+                <div class="panel-icon panel-icon--blue">
+                  <i class="bi bi-list-check"></i>
+                </div>
+                <span>Course Selection</span>
+              </div>
+              <span class="multi-hint">
+                                <i class="bi bi-info-circle"></i> Multi-select allowed
+                            </span>
+            </div>
+
+            <!-- Validation error -->
+            <div th:if="${#fields.hasErrors('courseIds')}" class="enroll-alert">
+              <i class="bi bi-exclamation-circle-fill"></i>
+              <span th:errors="*{courseIds}">Please select at least one course.</span>
+            </div>
+
+            <div class="table-responsive-wrap">
+              <table class="sms-table" id="courseTable">
+                <thead>
+                <tr>
+                  <th style="width:52px;">Select</th>
+                  <th>Course Name</th>
+                  <th>Code</th>
+                  <th class="text--right">Fee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course : ${courseList}" class="course-row">
+                  <td>
+                    <input class="sms-checkbox course-checkbox"
+                           type="checkbox"
+                           th:field="*{courseIds}"
+                           th:value="${course.id}"
+                           th:id="|course-${course.id}|"
+                           th:data-fee="${course.fee}"
+                           th:data-name="${course.courseName}"/>
+                  </td>
+                  <td>
+                    <label th:for="|course-${course.id}|"
+                           class="course-name-label"
+                           th:text="${course.courseName}">Course</label>
+                  </td>
+                  <td>
+                    <span class="code-badge" th:text="${course.courseCode}">C101</span>
+                  </td>
+                  <td class="fee-cell"
+                      th:text="${'KES ' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </section>
+          <!-- end left panel -->
+
+          <!--
+               RIGHT: Student & Summary
+           -->
+          <aside class="summary-aside">
+
+            <!-- Student selector card -->
+            <div class="sms-card summary-card">
+              <div class="panel-header">
+                <div class="panel-header__left">
+                  <div class="panel-icon panel-icon--green">
+                    <i class="bi bi-person-check"></i>
+                  </div>
+                  <span>Select Student</span>
+                </div>
+              </div>
+
+              <div class="summary-card__body">
+
+                <!-- Student dropdown -->
+                <div class="field-group">
+                  <label for="studentSelect" class="field-label">Student</label>
+                  <div class="field-input-wrap field-select-wrap">
+                    <i class="bi bi-person field-icon"></i>
+                    <select id="studentSelect"
+                            class="field-input field-select"
+                            th:field="*{studentId}"
+                            th:classappend="${#fields.hasErrors('studentId')} ? ' field-input--error'">
+                      <option value="">Choose a student…</option>
+                      <option th:each="student : ${studentList}"
+                              th:value="${student.id}"
+                              th:data-name="${student.firstName + ' ' + student.lastName}"
+                              th:data-email="${student.email}"
+                              th:text="${student.firstName + ' ' + student.lastName + ' (' + student.email + ')'}">
+                      </option>
+                    </select>
+                    <i class="bi bi-chevron-down select-chevron"></i>
+                  </div>
+                  <span class="field-error"
+                        th:if="${#fields.hasErrors('studentId')}"
+                        th:errors="*{studentId}"></span>
+                </div>
+
+                <!-- Selected student preview chip -->
+                <div class="student-preview" id="studentPreview">
+                  <div class="student-preview__avatar" id="studentAvatarText">—</div>
+                  <div class="student-preview__info">
+                    <span class="student-preview__name" id="selectedStudent">No student selected</span>
+                    <span class="student-preview__email" id="selectedEmail"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Summary card -->
+            <div class="sms-card summary-card">
+              <div class="panel-header">
+                <div class="panel-header__left">
+                  <div class="panel-icon panel-icon--purple">
+                    <i class="bi bi-receipt"></i>
+                  </div>
+                  <span>Enrollment Summary</span>
+                </div>
+              </div>
+
+              <div class="summary-card__body">
+
+                <!-- Stats row -->
+                <div class="summary-stats">
+                  <div class="summary-stat">
+                    <span class="summary-stat__label">Courses Selected</span>
+                    <span class="summary-stat__value" id="selectedCourseCount">0</span>
+                  </div>
+                  <div class="summary-stat-divider"></div>
+                  <div class="summary-stat">
+                    <span class="summary-stat__label">Total Fee</span>
+                    <span class="summary-stat__value summary-stat__value--fee"
+                          id="totalfees">KES 0.00</span>
+                  </div>
+                </div>
+
+                <!-- Selected courses list -->
+                <div class="field-label" style="margin-bottom:8px;">Selected Courses</div>
+                <ul class="selected-courses-list" id="selectedCourses">
+                  <li class="selected-courses-list__empty">No courses selected yet</li>
+                </ul>
+
+                <!-- Action buttons -->
+                <div class="summary-actions">
+                  <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost sms-btn-full">
+                    <i class="bi bi-x-lg"></i> Cancel
+                  </a>
+                  <button type="submit" class="sms-btn sms-btn-primary sms-btn-full">
+                    <i class="bi bi-check2-circle"></i> Enroll
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </aside>
+          <!-- end right aside -->
+
+        </div>
+        <!-- end .enroll-grid -->
+
+      </form>
+
+    </main>
+
+
+
+  </div>
+  </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+
+
+<!-- ── Preserved JS (enhanced) ───────────────────────────── -->
+<script th:inline="javascript">
+
+  const checkboxes         = document.querySelectorAll(".course-checkbox");
+  const selectedCourseCount = document.getElementById("selectedCourseCount");
+  const totalfees           = document.getElementById("totalfees");
+  const selectedCourses     = document.getElementById("selectedCourses");
+  const selectedStudent     = document.getElementById("selectedStudent");
+  const selectedEmail       = document.getElementById("selectedEmail");
+  const studentAvatarText   = document.getElementById("studentAvatarText");
+  const studentSelect       = document.getElementById("studentSelect");
+
+  function updateSummary() {
+    let selected = [];
+    let total = 0;
+
+    checkboxes.forEach(cb => {
+      // highlight selected row
+      const row = cb.closest("tr");
+      if (cb.checked) {
+        selected.push({ name: cb.dataset.name, fee: cb.dataset.fee });
+        total += parseFloat(cb.dataset.fee || "0");
+        row && row.classList.add("row-selected");
+      } else {
+        row && row.classList.remove("row-selected");
+      }
+    });
+
+    // Update count
+    selectedCourseCount.textContent = selected.length.toString();
+
+    // Update total fee
+    totalfees.textContent = "KES " + total.toLocaleString("en-KE", {
+      minimumFractionDigits: 2, maximumFractionDigits: 2
+    });
+
+    // Update courses list
+    selectedCourses.innerHTML = "";
+    if (selected.length === 0) {
+      const li = document.createElement("li");
+      li.className = "selected-courses-list__empty";
+      li.textContent = "No courses selected yet";
+      selectedCourses.appendChild(li);
+    } else {
+      selected.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+                    <span class="course-item-name">${item.name}</span>
+                    <span class="course-item-fee">KES ${parseFloat(item.fee).toLocaleString('en-KE',{minimumFractionDigits:2})}</span>
+                `;
+        selectedCourses.appendChild(li);
+      });
+    }
+  }
+
+  function getInitials(name) {
+    const parts = name.trim().split(" ");
+    return parts.length >= 2
+            ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+            : parts[0].substring(0, 2).toUpperCase();
+  }
+
+  function updateStudent() {
+    const opt = studentSelect && studentSelect.value
+            ? studentSelect.options[studentSelect.selectedIndex]
+            : null;
+
+    if (opt && studentSelect.value) {
+      const name  = opt.dataset.name  || "";
+      const email = opt.dataset.email || "";
+      selectedStudent.textContent    = name;
+      selectedEmail.textContent      = email;
+      studentAvatarText.textContent  = getInitials(name);
+    } else {
+      selectedStudent.textContent    = "No student selected";
+      selectedEmail.textContent      = "";
+      studentAvatarText.textContent  = "—";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    checkboxes.forEach(cb => cb.addEventListener("change", updateSummary));
+    if (studentSelect) studentSelect.addEventListener("change", updateStudent);
+
+    // init on load (in case of form re-submission with pre-filled values)
+    updateSummary();
+    updateStudent();
+  });
+
+</script>
+
+</body>
+</html>

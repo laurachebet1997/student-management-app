@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Dashboard', ~{::link})}">
+  <link th:href="@{/css/dashboardCSS/dashboard.css}" rel="stylesheet">
+</head>
+
+<body>
+<!-- Topbar -->
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+  <!-- ── Sidebar -->
+  <div th:replace="~{fragments/layout :: sidebar('dashboard')}"></div>
+
+  <div id="page-content-wrapper">
+    <!-- ── Main Area  -->
+    <div class="main-area">
+      <!-- Welcome Header -->
+      <div class="dash-welcome">
+        <div>
+          <h1 class="dash-welcome__title">Welcome  <span th:text="${adminName}"></span>.</h1>
+          <p class="dash-welcome__sub"></p>
+        </div>
+        <div class="dash-welcome__date" id="liveDate"></div>
+      </div>
+      <!-- Page Content -->
+      <main class="page-content">
+
+
+
+        <!-- DASHBOARD BODY: left column + right panel -->
+        <div class="dash-body">
+
+          <!-- LEFT COLUMN -->
+          <div class="dash-left">
+
+            <!-- Stat Cards Row -->
+            <div class="stat-cards">
+
+              <div class="stat-card">
+                <div class="stat-card__info">
+                  <span class="stat-card__label">Total Students</span>
+                  <span class="stat-card__value" th:text="${dashboardStats.totalStudents}">1,250</span>
+                </div>
+                <div class="stat-card__icon stat-icon--blue">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card__info">
+                  <span class="stat-card__label">Total Courses</span>
+                  <span class="stat-card__value" th:text="${dashboardStats.totalCourses}">42</span>
+                </div>
+                <div class="stat-card__icon stat-icon--teal">
+                  <i class="bi bi-book-fill"></i>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card__info">
+                  <span class="stat-card__label">Recent Enrollments</span>
+                  <span class="stat-card__value" th:text="${dashboardStats.studentsEnrolledThisMonth}">10</span>
+                </div>
+                <div class="stat-card__icon stat-icon--green">
+                  <i class="bi bi-arrow-up-right"></i>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-card__info">
+                  <span class="stat-card__label">Top Course</span>
+                  <span class="stat-card__value" th:text="${dashboardStats.topPerformingCourse}">—</span>
+                </div>
+                <div class="stat-card__icon stat-icon--red">
+                  <i class="bi bi-trophy-fill"></i>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Quick Action Cards -->
+            <div class="action-cards">
+
+              <div class="action-card">
+                <div class="action-card__illus action-illus--blue">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="action-card__body">
+                  <h3 class="action-card__title">Manage Students</h3>
+                  <p class="action-card__desc">View, add, edit student records.</p>
+                  <a th:href="@{/students/list}" class="action-btn action-btn--blue">
+                    <i class="bi bi-gear-fill"></i> Manage Students
+                  </a>
+                </div>
+              </div>
+
+              <div class="action-card">
+                <div class="action-card__illus action-illus--teal">
+                  <i class="bi bi-book-fill"></i>
+                </div>
+                <div class="action-card__body">
+                  <h3 class="action-card__title">Manage Courses</h3>
+                  <p class="action-card__desc">View and update course catalog.</p>
+                  <a th:href="@{/course/list}" class="action-btn action-btn--teal">
+                    <i class="bi bi-collection-fill"></i> Manage Courses
+                  </a>
+                </div>
+              </div>
+
+              <div class="action-card">
+                <div class="action-card__illus action-illus--navy">
+                  <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <div class="action-card__body">
+                  <h3 class="action-card__title">Enroll Students</h3>
+                  <p class="action-card__desc">Register students for new courses.</p>
+                  <a th:href="@{/enrollments/showEnroll}" class="action-btn action-btn--navy">
+                    <i class="bi bi-plus-lg"></i> Enroll Students
+                  </a>
+                </div>
+              </div>
+
+              <div class="action-card">
+                <div class="action-card__illus action-illus--orange">
+                  <i class="bi bi-megaphone-fill"></i>
+                </div>
+                <div class="action-card__body">
+                  <h3 class="action-card__title">Announcements</h3>
+                  <p class="action-card__desc">Create and send student communications.</p>
+                  <a th:href="@{/announcements}" class="action-btn action-btn--orange">
+                    <i class="bi bi-megaphone"></i> View Announcements
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Recent Student Registrations table -->
+            <section class="sms-card">
+
+              <div class="table-toolbar">
+                            <span class="table-label">
+                                <i class="bi bi-clock-history me-2" style="color:var(--primary);"></i>
+                                Recent Student Registrations
+                            </span>
+                <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost sms-btn-sm">
+                  View All <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+
+              <div th:if="${students.isEmpty()}" class="empty-state">
+                <i class="bi bi-people"></i>
+                <p>No recent registrations.</p>
+              </div>
+
+              <div class="table-responsive-wrap" th:if="${!students.isEmpty()}">
+                <table class="sms-table">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Courses</th>
+                    <th>Total Fee</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="student : ${students}">
+                    <td><span class="id-pill" th:text="${student.studentId}">S001</span></td>
+                    <td>
+                      <div class="name-cell">
+                        <div class="student-avatar"
+                             th:text="${#strings.toUpperCase(#strings.substring(student.studentName,0,2))}">AL</div>
+                        <span th:text="${student.studentName}">Alice Green</span>
+                      </div>
+                    </td>
+                    <td><span class="cell-muted" th:text="${student.email}">a@edu.com</span></td>
+                    <td><span class="count-badge" th:text="${student.courseCount}">3</span></td>
+                    <td>
+                                        <span class="cell-muted"
+                                              th:text="${'KES ' + #numbers.formatDecimal(student.totalFee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+                    </td>
+                    <td>
+                      <a th:href="@{/enrollments/getStudentEnrollmentDetails/{id}(id=${student.studentId}, source='dashboard')}"
+                         class="act-btn act-btn--view" title="View">
+                        <i class="bi bi-eye"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </section>
+
+          </div>
+          <!-- end dash-left -->
+
+        </div>
+        <!-- end dash-body -->
+
+      </main>
+
+    </div>
+
+
+  </div>
+
+  </div>
+<!-- footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+
+<script>
+  const el = document.getElementById('liveDate');
+  if (el) {
+    el.textContent = new Date().toLocaleDateString('en-KE', {
+      weekday:'long', year:'numeric', month:'long', day:'numeric'
+    });
+  }
+</script>
+
+</body>
+</html>

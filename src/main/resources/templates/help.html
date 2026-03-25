@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Help & Support', ~{::link})}">
+    <link th:href="@{/css/rashCSS/help.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<main class="page-content">
+<div class="d-flex" id="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar('help')}"></div>
+    <div id="page-content-wrapper">
+    <div class="main-area">
+
+
+            <div class="sms-page-header">
+                <div>
+                    <h1 class="sms-page-title">Help &amp; Support</h1>
+                    <p class="sms-page-sub">Need assistance? Reach out to one of the system administrators below.</p>
+                </div>
+            </div>
+
+            <!-- Admin contact cards -->
+            <div class="section-title">
+                <i class="bi bi-shield-person"></i> System Administrators
+            </div>
+
+            <div class="admin-cards">
+
+                <!-- Admin 1 -->
+                <div class="admin-card">
+                    <div class="admin-card__top">
+                        <div class="admin-avatar" style="background:#2563eb;">LC</div>
+                        <div class="admin-card__info">
+                            <h3 class="admin-card__name">Laura Chebet</h3>
+                            <span class="admin-card__role">
+                                <i class="bi bi-star-fill"></i> Super Admin
+                            </span>
+                        </div>
+                    </div>
+                    <div class="admin-card__contact">
+                        <a href="mailto:laura@admin.ac.ke" class="contact-row">
+                            <i class="bi bi-envelope-fill"></i>
+                            laura@admin.ac.ke
+                        </a>
+                        <a href="tel:+254740953906" class="contact-row">
+                            <i class="bi bi-telephone-fill"></i>
+                            +254 740953906
+                        </a>
+                    </div>
+                    <div class="admin-card__footer">
+                        <span class="status-dot status-dot--online"></span>
+                        <span class="status-text">Available 24/7</span>
+                    </div>
+                </div>
+
+                <!-- Admin 2 -->
+                <div class="admin-card">
+                    <div class="admin-card__top">
+                        <div class="admin-avatar" style="background:#0f766e;">PG</div>
+                        <div class="admin-card__info">
+                            <h3 class="admin-card__name">Peter Gituya</h3>
+                            <span class="admin-card__role">
+                                <i class="bi bi-person-gear"></i> System Admin
+                            </span>
+                        </div>
+                    </div>
+                    <div class="admin-card__contact">
+                        <a href="mailto:peter@admin.ac.ke" class="contact-row">
+                            <i class="bi bi-envelope-fill"></i>
+                            peter@admin.ac.ke
+                        </a>
+                        <a href="tel:+254745841707" class="contact-row">
+                            <i class="bi bi-telephone-fill"></i>
+                            +254 745841707
+                        </a>
+                    </div>
+                    <div class="admin-card__footer">
+                        <span class="status-dot status-dot--online"></span>
+                        <span class="status-text">Available 24/7</span>
+                    </div>
+                </div>
+
+                <!-- Admin 3 -->
+                <div class="admin-card">
+                    <div class="admin-card__top">
+                        <div class="admin-avatar" style="background:#6d28d9;">RO</div>
+                        <div class="admin-card__info">
+                            <h3 class="admin-card__name">Rebecca Omoro</h3>
+                            <span class="admin-card__role">
+                                <i class="bi bi-person-gear"></i> System Admin
+                            </span>
+                        </div>
+                    </div>
+                    <div class="admin-card__contact">
+                        <a href="mailto:rebecca@admin.ac.ke" class="contact-row">
+                            <i class="bi bi-envelope-fill"></i>
+                            rebecca@admin.ac.ke
+                        </a>
+                        <a href="tel:+254708737725" class="contact-row">
+                            <i class="bi bi-telephone-fill"></i>
+                            +254 708737725
+                        </a>
+                    </div>
+                    <div class="admin-card__footer">
+                        <span class="status-dot status-dot--away"></span>
+                        <span class="status-text">Available 24/7</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FAQ section -->
+            <div class="section-title" style="margin-top:32px;">
+                <i class="bi bi-question-circle"></i> Frequently Asked Questions
+            </div>
+
+            <div class="sms-card faq-card">
+                <div class="faq-item">
+                    <div class="faq-q"><i class="bi bi-chevron-right faq-chevron"></i> How do I add a new student?</div>
+                    <div class="faq-a">Go to <strong>Students → Add New Student</strong> and fill in the required details.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q"><i class="bi bi-chevron-right faq-chevron"></i> How do I enroll a student in a course?</div>
+                    <div class="faq-a">Navigate to <strong>Enroll to Course</strong> in the sidebar, select the student and the desired courses, then click <em>Enroll</em>.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q"><i class="bi bi-chevron-right faq-chevron"></i> Can a student be enrolled in multiple courses?</div>
+                    <div class="faq-a">Yes — the enrollment form supports multi-select so you can enroll a student in several courses at once.</div>
+                </div>
+                <div class="faq-item faq-item--last">
+                    <div class="faq-q"><i class="bi bi-chevron-right faq-chevron"></i> Who do I contact if I encounter a system error?</div>
+                    <div class="faq-a">Contact any of the system administrators listed above and include a screenshot of the error for faster resolution.</div>
+                </div>
+            </div>
+
+        </main>
+
+    </div> </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

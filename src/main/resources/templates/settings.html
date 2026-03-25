@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Settings', ~{::link})}">
+    <link th:href="@{/css/rashCSS/settings.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+    <div th:replace="~{fragments/layout :: sidebar('settings')}"></div>
+    <div id="page-content-wrapper" >
+    <div class="main-area">
+
+        <main class="page-content">
+
+            <div class="sms-page-header">
+                <div>
+                    <h1 class="sms-page-title">Settings</h1>
+                    <p class="sms-page-sub">Manage your account preferences and system configuration.</p>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+
+                <!-- LEFT: Settings Nav -->
+                <nav class="settings-nav sms-card">
+                    <a href="#profile"    class="settings-nav__item settings-nav__item--active">
+                        <i class="bi bi-person-circle"></i> Profile
+                    </a>
+                    <a href="#security"   class="settings-nav__item">
+                        <i class="bi bi-shield-lock"></i> Security
+                    </a>
+                    <a href="#appearance" class="settings-nav__item">
+                        <i class="bi bi-palette"></i> Appearance
+                    </a>
+                    <a href="#system"     class="settings-nav__item">
+                        <i class="bi bi-sliders"></i> System
+                    </a>
+                    <a href="#notifications" class="settings-nav__item">
+                        <i class="bi bi-bell"></i> Notifications
+                    </a>
+                </nav>
+                <!-- end .settings-sections -->
+
+            </div>
+            <!-- end .settings-grid -->
+
+        </main>
+
+    </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+<script>
+    // Settings nav smooth scroll + active highlight
+    document.querySelectorAll('.settings-nav__item').forEach(link => {
+        link.addEventListener('click', function() {
+            document.querySelectorAll('.settings-nav__item').forEach(l => l.classList.remove('settings-nav__item--active'));
+            this.classList.add('settings-nav__item--active');
+        });
+    });
+</script>
+
+</body>
+</html>

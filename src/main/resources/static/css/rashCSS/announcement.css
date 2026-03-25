@@ -1,0 +1,15 @@
+
+.sms-page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+.sms-page-title  { font-size:24px; font-weight:700; color:var(--text-main); letter-spacing:-0.3px; margin-bottom:3px; }
+.sms-page-sub    { font-size:13px; color:var(--text-muted); margin:0; }
+.sms-btn { display:inline-flex; align-items:center; gap:7px; padding:9px 18px; border-radius:8px; font-size:13.5px; font-weight:600; font-family:var(--font); cursor:pointer; border:none; text-decoration:none; transition:background 0.18s,transform 0.1s; }
+.sms-btn-primary { background:var(--primary); color:#fff; box-shadow:0 2px 8px rgba(37,99,235,0.25); }
+.sms-btn-primary:disabled { opacity:0.5; cursor:not-allowed; }
+.sms-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow-sm); border:1px solid var(--border); overflow:hidden; }
+.empty-page-card { max-width:520px; margin:0 auto; }
+.empty-page-inner { display:flex; flex-direction:column; align-items:center; text-align:center; padding:56px 40px 52px; gap:14px; }
+.empty-icon-wrap { width:72px; height:72px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:32px; }
+.empty-icon--orange { background:#ffedd5; color:#ea580c; }
+.empty-title { font-size:20px; font-weight:700; color:var(--text-main); margin:0; }
+.empty-desc  { font-size:13.5px; color:var(--text-muted); line-height:1.7; margin:0; }
+.coming-soon-pill { display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:var(--text-muted); font-size:12px; font-weight:600; padding:6px 14px; border-radius:20px; border:1px solid var(--border); margin-top:4px; }

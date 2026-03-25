@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Course Details', ~{::link})}">
+    <link th:href="@{/css/courseCSS/view-course.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+
+  <!-- ── Sidebar -->
+  <div th:replace="~{fragments/layout :: sidebar('courses')}"></div>
+
+  <div id="page-content-wrapper" >
+  <!-- ── Main Area -->
+  <div class="main-area">
+      <main class="page-content">
+
+      <!-- ── Page Header ───────────────────────────── -->
+      <div class="sms-page-header">
+        <div>
+          <h1 class="sms-page-title">Course Details</h1>
+          <p class="sms-page-sub">Viewing full information for this course.</p>
+        </div>
+        <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
+          <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+      </div>
+
+      <!-- ── Detail Card ────────────────────────────── -->
+      <div class="sms-card detail-card">
+
+        <!-- Card header -->
+        <div class="detail-card__header">
+          <div class="detail-card__avatar">
+            <i class="bi bi-book-half"></i>
+          </div>
+          <div class="detail-card__title-block">
+            <h2 class="detail-card__name" th:text="${course.courseName}">Course Name</h2>
+            <span class="code-badge" th:text="${course.courseCode}">C101</span>
+          </div>
+          <div class="detail-card__status">
+                        <span class="status-badge"
+                              th:classappend="${course.active} ? ' status-active' : ' status-inactive'"
+                              th:text="${course.active} ? 'Active' : 'Inactive'">Active</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="detail-divider"></div>
+
+        <!-- Info grid -->
+        <div class="detail-card__body">
+
+          <div class="info-section">
+            <h3 class="info-section__title">
+              <i class="bi bi-info-circle"></i> Course Information
+            </h3>
+            <div class="info-grid">
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-book"></i> Course Name
+                                </span>
+                <span class="info-item__value" th:text="${course.courseName}">—</span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-hash"></i> Course Code
+                                </span>
+                <span class="info-item__value">
+                                    <span class="code-badge" th:text="${course.courseCode}">—</span>
+                                </span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-currency-exchange"></i> Course Fee
+                                </span>
+                <span class="info-item__value fee-value"
+                      th:text="${'KES ' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-clock"></i> Duration
+                                </span>
+                <span class="info-item__value" th:text="${course.duration}">—</span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-toggle-on"></i> Status
+                                </span>
+                <span class="info-item__value">
+                                    <span class="status-badge"
+                                          th:classappend="${course.active} ? ' status-active' : ' status-inactive'"
+                                          th:text="${course.active} ? 'Active' : 'Inactive'">—</span>
+                                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Description (full width) -->
+          <div class="info-section" th:if="${course.description != null and !course.description.isEmpty()}">
+            <h3 class="info-section__title">
+              <i class="bi bi-text-paragraph"></i> Description
+            </h3>
+            <div class="description-box" th:text="${course.description}">—</div>
+          </div>
+
+        </div>
+
+        <!-- Card Footer Actions -->
+        <div class="detail-card__footer">
+          <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+          </a>
+          <a th:href="@{'/course/' + ${course.id} + '/edit'}" class="sms-btn sms-btn-warning">
+            <i class="bi bi-pencil"></i> Edit Course
+          </a>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+  </div>
+</div>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

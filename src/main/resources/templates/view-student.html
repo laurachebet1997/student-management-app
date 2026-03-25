@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Student Details', ~{::link})}">
+    <link th:href="@{/css/studentCSS/view-student.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+
+  <!-- ── Sidebar -->
+  <div th:replace="~{fragments/layout :: sidebar('students')}"></div>
+
+
+
+  <div id="page-content-wrapper">
+
+  <!-- ── Main Area -->
+  <div class="main-area">
+
+    <main class="page-content">
+
+      <!-- ── Page Header  -->
+      <div class="sms-page-header">
+        <div>
+          <h1 class="sms-page-title">Student Details</h1>
+          <p class="sms-page-sub">Viewing <span th:text="${student.firstName}" ></span>'s personal profile information.</p>
+        </div>
+        <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
+          <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+      </div>
+
+      <!-- ── Detail Card  -->
+      <div class="sms-card detail-card">
+
+        <!-- Card header: avatar + name + status -->
+        <div class="detail-card__header">
+          <div class="detail-card__avatar"
+               th:text="${#strings.toUpperCase(
+                             #strings.substring(student.firstName,0,1)
+                             + #strings.substring(student.lastName,0,1))}">AB
+          </div>
+          <div class="detail-card__title-block">
+            <h2 class="detail-card__name"
+                th:text="|${student.firstName} ${student.lastName}|">Full Name</h2>
+            <span class="detail-card__email" th:text="${student.email}">email@example.com</span>
+          </div>
+          <div class="detail-card__status">
+                        <span class="status-badge"
+                              th:classappend="${student.active} ? ' status-active' : ' status-inactive'"
+                              th:text="${student.active} ? 'Active' : 'Inactive'">Active</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="detail-divider"></div>
+
+        <!-- Info Body -->
+        <div class="detail-card__body">
+
+          <!-- Contact Information section -->
+          <div class="info-section">
+            <h3 class="info-section__title">
+              <i class="bi bi-person-lines-fill"></i> Personal Information
+            </h3>
+            <div class="info-grid">
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-person"></i> First Name
+                                </span>
+                <span class="info-item__value" th:text="${student.firstName}">—</span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-person"></i> Last Name
+                                </span>
+                <span class="info-item__value" th:text="${student.lastName}">—</span>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-envelope"></i> Email Address
+                                </span>
+                <a class="info-item__value info-item__link"
+                   th:href="'mailto:' + ${student.email}"
+                   th:text="${student.email}">—</a>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-telephone"></i> Phone Number
+                                </span>
+                <a class="info-item__value info-item__link"
+                   th:href="'tel:' + ${student.phoneNumber}"
+                   th:text="${student.phoneNumber != null and !student.phoneNumber.isEmpty()} ? ${student.phoneNumber} : '—'">—</a>
+              </div>
+
+              <div class="info-item">
+                                <span class="info-item__label">
+                                    <i class="bi bi-toggle-on"></i> Status
+                                </span>
+                <span class="info-item__value">
+                                    <span class="status-badge"
+                                          th:classappend="${student.active} ? ' status-active' : ' status-inactive'"
+                                          th:text="${student.active} ? 'Active' : 'Inactive'">—</span>
+                                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Address section -->
+          <div class="info-section"
+               th:if="${student.address != null and !student.address.isEmpty()}">
+            <h3 class="info-section__title">
+              <i class="bi bi-geo-alt"></i> Address
+            </h3>
+            <div class="description-box" th:text="${student.address}">—</div>
+          </div>
+
+        </div>
+
+        <!-- Card Footer Actions -->
+        <div class="detail-card__footer">
+          <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+          </a>
+          <a th:href="@{/students/{id}/edit(id=${student.id})}" class="sms-btn sms-btn-warning">
+            <i class="bi bi-pencil"></i> Edit Student
+          </a>
+        </div>
+
+      </div>
+
+    </main>
+
+
+
+  </div>
+  </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>

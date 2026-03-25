@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Enrolled Students', ~{::link})}">
+    <link th:href="@{/css/enrollCSS/enrolled-students.css}" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="~{fragments/layout :: topbar}"></header>
+<div class="d-flex" id="wrapper">
+    <!-- ── Sidebar  -->
+    <div th:replace="~{fragments/layout :: sidebar('enrollments')}"></div>
+    <div id="page-content-wrapper">
+
+    <!-- ── Main Area  -->
+    <div class="main-area">
+        <main class="page-content">
+            <!-- ── Page Header -->
+            <div class="sms-page-header">
+                <div>
+                    <h1 class="sms-page-title">Students Enrolled in Courses</h1>
+                    <p class="sms-page-sub">Track enrollment coverage, fees, and quick access to student details.</p>
+                </div>
+                <a th:href="@{/enrollments/showEnroll}" class="sms-btn sms-btn-primary">
+                    <i class="bi bi-plus-lg"></i> Enroll Student
+                </a>
+            </div>
+
+            <!-- ── Success Alert  -->
+            <div th:if="${message}" class="sms-alert sms-alert-success" th:text="${message}"></div>
+
+            <!-- ── Table Card  -->
+            <section class="sms-card">
+
+                <!-- Toolbar -->
+                <div class="table-toolbar">
+                    <span class="table-label">
+                        <i class="bi bi-check2-square me-2" style="color:var(--primary);"></i>
+                        Enrolled Students
+                    </span>
+                    <div class="toolbar-right">
+                        <button class="sms-btn sms-btn-ghost sms-btn-sm" id="filtersBtn">
+                            <i class="bi bi-funnel"></i> Filters
+                            <i class="bi bi-chevron-down" style="font-size:11px;"></i>
+                        </button>
+                        <div class="toolbar-search">
+                            <i class="bi bi-search"></i>
+                            <input type="text"
+                                   id="tableSearchInput"
+                                   placeholder="Search"
+                                   autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty state -->
+                <div th:if="${students.content.isEmpty()}" class="empty-state">
+                    <i class="bi bi-person-x"></i>
+                    <p>No enrolled students found.</p>
+                    <a th:href="@{/enrollments/showEnroll}" class="sms-btn sms-btn-primary">
+                        Enroll First Student
+                    </a>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive-wrap" th:if="${!students.content.isEmpty()}">
+                    <table class="sms-table" id="enrolledTable">
+                        <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Courses</th>
+                            <th>Total Fee</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student : ${students.content}" class="enrolled-row">
+
+                            <!-- Student ID -->
+                            <td>
+                                <span class="id-pill" th:text="${student.studentId}">S001</span>
+                            </td>
+
+                            <!-- Name + avatar -->
+                            <td>
+                                <div class="name-cell">
+                                    <div class="student-avatar"
+                                         th:text="${#strings.toUpperCase(#strings.substring(student.studentName,0,2))}">AB</div>
+                                    <span class="student-fullname" th:text="${student.studentName}">Student Name</span>
+                                </div>
+                            </td>
+
+                            <!-- Email -->
+                            <td>
+                                <span class="cell-muted" th:text="${student.email}">email@example.com</span>
+                            </td>
+
+                            <!-- Course count badge -->
+                            <td>
+                                <span class="count-badge" th:text="${student.courseCount}">0</span>
+                            </td>
+
+                            <!-- Total fee -->
+                            <td>
+                                <span class="fee-value"
+                                      th:text="${'KES ' + #numbers.formatDecimal(student.totalFee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+                            </td>
+
+                            <!-- Actions -->
+                            <td>
+                                <a th:href="@{/enrollments/getStudentEnrollmentDetails/{id}(id=${student.studentId}, source='enrollments')}"
+                                   class="act-btn act-btn--view"
+                                   title="View Enrollment Details">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ── Pagination Footer ──────────────── -->
+                <div class="table-footer" th:if="${!students.content.isEmpty()}">
+                    <span class="total-label">
+                        Total Enrolled: <strong th:text="${students.totalElements}">0</strong>
+                    </span>
+
+                    <nav aria-label="Enrollment pagination">
+                        <ul class="sms-pagination">
+
+                            <!-- Previous -->
+                            <li th:classappend="${students.first} ? 'disabled'">
+                                <a class="page-btn"
+                                   th:href="@{/enrollments/enrollmentList(page=${students.first ? 0 : students.number - 1}, size=${students.size})}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+
+                            <!-- Page numbers -->
+                            <li th:each="pageNum : ${#numbers.sequence(0, students.totalPages - 1)}"
+                                th:classappend="${pageNum == students.number} ? 'active'">
+                                <a class="page-btn"
+                                   th:href="@{/enrollments/enrollmentList(page=${pageNum}, size=${students.size})}"
+                                   th:text="${pageNum + 1}">1</a>
+                            </li>
+
+                            <!-- Next -->
+                            <li th:classappend="${students.last} ? 'disabled'">
+                                <a class="page-btn"
+                                   th:href="@{/enrollments/enrollmentList(page=${students.last ? students.number : students.number + 1}, size=${students.size})}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+            </section>
+
+        </main>
+
+
+    </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+<script>
+    // Live search
+    document.getElementById('tableSearchInput')?.addEventListener('input', function () {
+        const q = this.value.toLowerCase().trim();
+        document.querySelectorAll('#enrolledTable tbody tr.enrolled-row').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
