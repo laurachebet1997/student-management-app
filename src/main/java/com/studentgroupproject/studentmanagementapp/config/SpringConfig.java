@@ -22,7 +22,8 @@ public class SpringConfig {
             "/announcements",
             "/report",
             "/settings",
-            "/help"
+            "/help",
+            "/profile"
 
     };
     @Bean

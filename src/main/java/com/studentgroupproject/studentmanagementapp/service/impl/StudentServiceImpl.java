@@ -46,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
         log.info("saving student data");
 
         Students students = mapper.map(studentDTO, Students.class);
-        students.setActive(true);
+        students.setActive(studentDTO.isActive());
         Students saved = studentRepository.save(students);
 
         return mapper.map(saved, StudentDTO.class);
@@ -56,8 +56,10 @@ public class StudentServiceImpl implements StudentService {
     public Page<StudentDTO> getStudents(int page, int size) {
         log.info("list of student from: {}", page);
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.DESC, "id"));
-        return studentRepository.findByActiveTrue(pageRequest)
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.ASC, "id"));
+        /*return studentRepository.findByActiveTrue(pageRequest)
+                .map(student -> mapper.map(student, StudentDTO.class));*/
+        return studentRepository.findAll(pageRequest)
                 .map(student -> mapper.map(student, StudentDTO.class));
     }
 

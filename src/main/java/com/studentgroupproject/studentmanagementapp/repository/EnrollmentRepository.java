@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.studentgroupproject.studentmanagementapp.model.Courses;
+import com.studentgroupproject.studentmanagementapp.model.Students;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +32,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByStudentId(Long studentId);
 
     Optional<Enrollment> findByStudentIdAndCourseId(Long studentId, Long courseId);
+
+    boolean existsByStudentAndCourse(Students student, Courses course);
 }

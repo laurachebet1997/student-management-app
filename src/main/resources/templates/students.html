@@ -14,15 +14,16 @@
   <div id="page-content-wrapper" >
   <!-- ── Main Area  -->
     <div class="main-area">
+      <!-- ── Page Header -->
+      <div class="sms-page-header">
+        <h1 class="sms-page-title">Student Records</h1>
+        <a th:href="@{/students/new}" class="sms-btn sms-btn-primary">
+          <i class="bi bi-plus-lg"></i> Add New Student
+        </a>
+      </div>
       <!-- Page Content -->
       <main class="page-content">
-        <!-- ── Page Header -->
-        <div class="sms-page-header">
-          <h1 class="sms-page-title">Student Records</h1>
-          <a th:href="@{/students/new}" class="sms-btn sms-btn-primary">
-            <i class="bi bi-plus-lg"></i> Add New Student
-          </a>
-        </div>
+
 
         <!-- ── Success / Error Alerts -->
         <div th:if="${message}"
@@ -39,10 +40,10 @@
             <div class="table-toolbar">
               <span class="table-label">Data Table</span>
               <div class="toolbar-right">
-                <button class="sms-btn sms-btn-ghost" id="filtersBtn">
+                <!--<button class="sms-btn sms-btn-ghost" id="filtersBtn">
                   <i class="bi bi-funnel"></i> Filters
                   <i class="bi bi-chevron-down" style="font-size:11px;"></i>
-                </button>
+                </button> -->
                 <div class="toolbar-search">
                   <i class="bi bi-search"></i>
                   <input type="text"
@@ -106,7 +107,7 @@
 
                   <!-- Email -->
                   <td>
-                    <span class="cell-text" th:text="${student.email}">a.green@edu.com</span>
+                    <span class="cell-text" th:text="${student.email}">a@student.com</span>
                   </td>
 
                   <!-- Phone -->
@@ -223,10 +224,39 @@
   });
 
   // Live table search (filters visible rows client-side)
-  document.getElementById('tableSearchInput')?.addEventListener('input', function () {
-    const q = this.value.toLowerCase().trim();
-    document.querySelectorAll('#studentsTable tbody tr.student-row').forEach(row => {
-      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  // document.getElementById('tableSearchInput')?.addEventListener('input', function () {
+  //   const q = this.value.toLowerCase().trim();
+  //   document.querySelectorAll('#studentsTable tbody tr.student-row').forEach(row => {
+  //     row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  //   });
+  // });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('tableSearchInput');
+    const tableBody = document.querySelector('table tbody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    searchInput.addEventListener('keyup', function() {
+      const filter = searchInput.value.toLowerCase();
+
+      // Loop through all table rows
+      for (let i = 0; i < rows.length; i++) {
+
+        const emailCell = rows[i].getElementsByTagName('td')[3];
+        //const courseCell = rows[i].getElementsByTagName('td')[3];
+
+        if (emailCell) {
+          const emailText = emailCell.textContent || emailCell.innerText;
+          //const courseText = courseCell.textContent || courseCell.innerText;
+
+          // Check if the search term exists in either column
+          if (emailText.toLowerCase().indexOf(filter) ){
+            rows[i].style.display = ""; // Show row
+          } else {
+            rows[i].style.display = "none"; // Hide row
+          }
+        }
+      }
     });
   });
 </script>

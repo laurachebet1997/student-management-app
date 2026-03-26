@@ -11,25 +11,22 @@
     <!-- ── Sidebar  -->
     <div th:replace="~{fragments/layout :: sidebar('courses')}"></div>
 
-    <div id="page-content-wrappper">
+    <div id="page-content-wrapper">
     <!-- ── Main Area -->
     <div class="main-area">
-        <main class="page-content">
-
-            <!--  Page Header  -->
-            <div class="sms-page-header">
-                <div>
-                    <h1 class="sms-page-title">Add New Course</h1>
-                    <p class="sms-page-sub">Fill in the details below to create a new course.</p>
-                </div>
-                <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
-                    <i class="bi bi-arrow-left"></i> Back to List
-                </a>
+        <!--  Page Header  -->
+        <div class="sms-page-header">
+            <div>
+                <h1 class="sms-page-title">Add New Course</h1>
+                <p class="sms-page-sub"></p>
             </div>
-
+            <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+        <main class="page-content">
             <!--  Form Card  -->
             <div class="sms-card form-card">
-
                 <div class="form-card__header">
                     <div class="form-card__header-icon">
                         <i class="bi bi-plus-circle-fill"></i>

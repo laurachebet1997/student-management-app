@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/layout :: head('Enrollment Details', ~{::link})}">
-  <link th:href="@{/css/enrollCSS/enroll-details.css}" rel="stylesheet">
+  <link th:href="@{/css/enrollCSS/enrollment-details.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -14,21 +14,20 @@
   <div id="page-content-wrapper">
   <!-- ── Main Area -->
     <div class="main-area">
-      <main class="page-content">
-        <!-- ── Page Header  -->
-        <div class="sms-page-header">
-          <div>
-            <h1 class="sms-page-title">Enrollment Details</h1>
-            <p class="sms-page-sub">Overview of courses, fees, and student information.</p>
-          </div>
-          <!-- Dynamic back button -->
-          <a th:href="${source == 'dashboard'} ? @{/dashboard} : @{/enrollments/enrollmentList}"
-             class="sms-btn sms-btn-ghost">
-            <i class="bi bi-arrow-left"></i>
-            <span th:text="${source == 'dashboard'} ? 'Back to Dashboard' : 'Back to Enrolled Students'">Back</span>
-          </a>
+      <!-- ── Page Header  -->
+      <div class="sms-page-header">
+        <div>
+          <h1 class="sms-page-title">Enrollment Details</h1>
+          <p class="sms-page-sub">Overview of courses, fees, and student information.</p>
         </div>
-
+        <!-- Dynamic back button -->
+        <a th:href="${source == 'dashboard'} ? @{/dashboard} : @{/enrollments/enrollmentList}"
+           class="sms-btn sms-btn-ghost">
+          <i class="bi bi-arrow-left"></i>
+          <span th:text="${source == 'dashboard'} ? 'Back to Dashboard' : 'Back to Enrolled Students'">Back</span>
+        </a>
+      </div>
+      <main class="page-content">
         <!-- ── Two-column layout ──────────────────────── -->
         <div class="details-grid">
 
@@ -117,6 +116,7 @@
                   <th>Course Name</th>
                   <th>Description</th>
                   <th class="fee-col-header">Fee</th>
+                  <th class="text-end">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -153,6 +153,20 @@
                   <td>
                                       <span class="fee-value"
                                             th:text="${'KES ' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}">KES 0.00</span>
+                  </td>
+
+                  <!-- action row -->
+                  <td class="text-end">
+                    <form th:action="@{/enrollments/delete/{id}(id=${course.enrollmentId})}"
+                          method="post"
+                          style="display:inline;">
+
+                      <button type="submit"
+                              class="sms-btn sms-btn-danger sms-btn-sm"
+                              onclick="return confirm('Remove this course from student?')">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </form>
                   </td>
 
                 </tr>

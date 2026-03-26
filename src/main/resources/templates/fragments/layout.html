@@ -48,8 +48,8 @@
 
         <!-- Profile dropdown menu -->
         <ul class="dropdown-menu dropdown-menu-end" style="font-size:13px; min-width:160px;">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <li><a class="dropdown-item" th:href="@{/students/profile}"><i class="bi bi-person me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" th:href="@{/settings}"><i class="bi bi-gear me-2"></i>Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
                 <form method="post" th:action="@{/logout}">

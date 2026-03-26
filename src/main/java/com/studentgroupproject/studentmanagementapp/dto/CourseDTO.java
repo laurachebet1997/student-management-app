@@ -31,6 +31,16 @@ public class CourseDTO {
 
     private boolean active;
 
+    public Long getEnrollmentId() {
+        return enrollmentId;
+    }
+
+    public void setEnrollmentId(Long enrollmentId) {
+        this.enrollmentId = enrollmentId;
+    }
+
+    private Long enrollmentId;
+
     public boolean isActive() {
         return active;
     }
@@ -88,5 +98,6 @@ public class CourseDTO {
     }
 
 
-
+    public void setCourseId(Long id) {
+    }
 }

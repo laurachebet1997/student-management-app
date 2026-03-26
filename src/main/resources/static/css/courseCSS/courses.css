@@ -3,7 +3,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: 15px;
+    padding-top: 13px;
 }
 .sms-page-title {
     font-size: 24px;
@@ -280,7 +281,7 @@
     justify-content: center;
     border: 1px solid var(--border);
     border-radius: 7px;
-    background: #fff;
+    background: lightslategrey;
     color: var(--text-main);
     font-size: 13px;
     font-weight: 500;
@@ -292,7 +293,7 @@
 .sms-pagination li.active .page-btn {
     background: var(--primary);
     border-color: var(--primary);
-    color: #fff;
+    color: black;
     font-weight: 700;
 }
 .sms-pagination li.disabled .page-btn {

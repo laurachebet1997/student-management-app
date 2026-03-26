@@ -1,4 +1,5 @@
-.sms-page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.sms-page-header{
+    display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:15px;flex-wrap:wrap;gap:12px;padding-top: 13px;}
 .sms-page-title{font-size:24px;font-weight:700;color:var(--text-main);letter-spacing:-0.3px;margin-bottom:3px}
 .sms-page-sub{font-size:13px;color:var(--text-muted);margin:0}
 .sms-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-size:13.5px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;text-decoration:none;transition:background 0.18s,box-shadow 0.18s,transform 0.1s}

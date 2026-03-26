@@ -20,4 +20,8 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     Page<Courses> findByActiveTrue(Pageable pageable);
 
     List<Courses> findByActiveTrue(Sort sort);
+
+    Page<Courses> findAll(Pageable pageable);
+
+    Courses findByCourseCodeIgnoreCase(String cs);
 }

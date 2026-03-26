@@ -1,4 +1,4 @@
-.sms-page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+.sms-page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:15px; flex-wrap:wrap; gap:12px;padding-top: 13px; }
 .sms-page-title  { font-size:24px; font-weight:700; color:var(--text-main); letter-spacing:-0.3px; margin-bottom:3px; }
 .sms-page-sub    { font-size:13px; color:var(--text-muted); margin:0; }
 

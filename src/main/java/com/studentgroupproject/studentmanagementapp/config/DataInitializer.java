@@ -2,9 +2,11 @@ package com.studentgroupproject.studentmanagementapp.config;
 
 
 import com.studentgroupproject.studentmanagementapp.model.Courses;
+import com.studentgroupproject.studentmanagementapp.model.Enrollment;
 import com.studentgroupproject.studentmanagementapp.model.Students;
 import com.studentgroupproject.studentmanagementapp.model.Users;
 import com.studentgroupproject.studentmanagementapp.repository.CourseRepository;
+import com.studentgroupproject.studentmanagementapp.repository.EnrollmentRepository;
 import com.studentgroupproject.studentmanagementapp.repository.StudentRepository;
 import com.studentgroupproject.studentmanagementapp.repository.UsersRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -23,7 +25,8 @@ public class DataInitializer {
             UsersRepository usersRepository,
             StudentRepository studentRepository,
             CourseRepository courseRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder,
+            EnrollmentRepository enrollmentRepository) {
         return args -> {
 
             // 1. Initialize Users (Your existing logic)
@@ -43,9 +46,9 @@ public class DataInitializer {
                 Courses  course = new Courses();
                 course.setCourseName("Computer Science");
                 course.setCourseCode("CS");
-                course.setDuration("2 years");
+                course.setDuration("3 years");
                 course.setActive(true);
-                course.setFee(new BigDecimal("40000"));
+                course.setFee(new BigDecimal("100000"));
                 course.setDescription("Mathematics and Computer") ;
                 courseRepository.save(course);
             }
@@ -69,6 +72,26 @@ public class DataInitializer {
                 course.setDescription("Health and Hospitality") ;
                 courseRepository.save(course);
             }
+            if (!courseRepository.existsByCourseCodeIgnoreCase("LW")) {
+                Courses  course = new Courses();
+                course.setCourseName("Law");
+                course.setCourseCode("LW");
+                course.setDuration("5 years");
+                course.setActive(true);
+                course.setFee(new BigDecimal("80000"));
+                course.setDescription("Legal education on practice of law") ;
+                courseRepository.save(course);
+            }
+            if (!courseRepository.existsByCourseCodeIgnoreCase("EN")) {
+                Courses  course = new Courses();
+                course.setCourseName("Engineering");
+                course.setCourseCode("EN");
+                course.setDuration("6 years");
+                course.setActive(true);
+                course.setFee(new BigDecimal("70000"));
+                course.setDescription("Engineering Science") ;
+                courseRepository.save(course);
+            }
 
             // 3. Initialize Students
             if (!studentRepository.existsByEmailIgnoreCase("peter@gmail.com")) {
@@ -76,7 +99,7 @@ public class DataInitializer {
                 student.setFirstName("Peter");
                 student.setLastName("Gituya");
                 student.setEmail("peter@gmail.com");
-                student.setPhoneNumber("+247458107") ;
+                student.setPhoneNumber("+254745841707") ;
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -86,7 +109,7 @@ public class DataInitializer {
                 student.setFirstName("Becky");
                 student.setLastName("Omoro");
                 student.setEmail("becky@gmail.com");
-                student.setPhoneNumber("+24708737725") ;
+                student.setPhoneNumber("+254708737725") ;
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -96,11 +119,78 @@ public class DataInitializer {
                 student.setFirstName("Laura");
                 student.setLastName("Chebet");
                 student.setEmail("laura@gmail.com");
-                student.setPhoneNumber("+24740953906") ;
+                student.setPhoneNumber("+254740953906") ;
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
             }
+            if (!studentRepository.existsByEmailIgnoreCase("inactive@gmail.com")) {
+                Students  student = new Students();
+                student.setFirstName("Inactive");
+                student.setLastName("Student");
+                student.setEmail("inactive@gmail.com");
+                student.setPhoneNumber("+254712345678") ;
+                student.setAddress("Kabarak") ;
+                student.setActive(false);
+                studentRepository.save(student);
+            }
+            if (!studentRepository.existsByEmailIgnoreCase("deleteMe@gmail.com")) {
+                Students  student = new Students();
+                student.setFirstName("Delete");
+                student.setLastName("Me");
+                student.setEmail("deleteMe@gmail.com");
+                student.setPhoneNumber("+254712345678") ;
+                student.setAddress("Kabarak") ;
+                student.setActive(true);
+                studentRepository.save(student);
+            }
+            if (!studentRepository.existsByEmailIgnoreCase("updateMe@gmail.com")) {
+                Students  student = new Students();
+                student.setFirstName("Update");
+                student.setLastName("Me");
+                student.setEmail("updateMe@gmail.com");
+                student.setPhoneNumber("+254712345678") ;
+                student.setAddress("Kabarak") ;
+                student.setActive(true);
+                studentRepository.save(student);
+            }
+            if (!studentRepository.existsByEmailIgnoreCase("enrollMe@gmail.com")) {
+                Students  student = new Students();
+                student.setFirstName("Enroll");
+                student.setLastName("Me");
+                student.setEmail("enrollMe@gmail.com");
+                student.setPhoneNumber("+254712345678") ;
+                student.setAddress("Kabarak") ;
+                student.setActive(true);
+                studentRepository.save(student);
+            }
+
+            if (!studentRepository.existsByEmailIgnoreCase("activateMe@gmail.com")) {
+                Students  student = new Students();
+                student.setFirstName("Activate");
+                student.setLastName("Me");
+                student.setEmail("activateMe@gmail.com");
+                student.setPhoneNumber("+254712345678") ;
+                student.setAddress("Kabarak") ;
+                student.setActive(false);
+                studentRepository.save(student);
+            }
+
+
+            //save default enrollment.
+
+            Students student1 = studentRepository.findByEmailIgnoreCase("enrollMe@gmail.com");
+            Courses cs = courseRepository.findByCourseCodeIgnoreCase("CS");
+
+            if (student1 != null && cs != null &&
+                    !enrollmentRepository.existsByStudentAndCourse(student1, cs)) {
+
+                Enrollment enrollment = new Enrollment();
+                enrollment.setStudent(student1);
+                enrollment.setCourse(cs);
+                enrollmentRepository.save(enrollment);
+            }
+
         };
     }
 }

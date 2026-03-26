@@ -16,4 +16,6 @@ public interface EnrollmentService {
     EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId);
 
     List<EnrollmentSummaryDTO> getRecentlyEnrolledStudents();
+
+    void deleteById(Long id);
 }

@@ -4,14 +4,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.studentgroupproject.studentmanagementapp.dto.CourseDTO;
+
 public class EnrollmentSummaryDTO {
 
     private Long studentId;
+
     private String studentName;
     private String email;
     private int courseCount;
     private BigDecimal totalFee;
     private List<CourseDTO> courseList = new ArrayList<>();
+
 
     public Long getStudentId() {
         return studentId;

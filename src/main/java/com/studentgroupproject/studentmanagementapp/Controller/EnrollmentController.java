@@ -110,12 +110,14 @@ public class EnrollmentController {
 
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteEnrollment(@PathVariable Long id,
+                                   RedirectAttributes redirectAttributes) {
 
+        enrollmentService.deleteById(id);
+        redirectAttributes.addFlashAttribute("message", "Enrollment removed");
 
-
-
-
-
-
+        return "redirect:/enrollments/enrollmentList";
+    }
 
 }

@@ -4,6 +4,8 @@ import com.studentgroupproject.studentmanagementapp.dto.EnrollmentSummaryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +52,7 @@ public class StudentController {
 
     @GetMapping("/list")
     public String listStudent(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "3") int size,
+                              @RequestParam(defaultValue = "4") int size,
                               Model model,
                               @RequestParam(value="message", required = false) String message)
     {
@@ -148,6 +150,20 @@ public class StudentController {
         redirectAttributes.addFlashAttribute("message", "Student deleted successfully!");
 
         return "redirect:/students/list";
+    }
+
+    @GetMapping("/profile")
+    public String profile(@AuthenticationPrincipal UserDetails userDetails,
+                          Model model) {
+
+        // username is usually the email in Spring Security
+        String username = userDetails.getUsername();
+
+        // If your UserDetails stores a display name, use that,Otherwise fall back to the username
+        model.addAttribute("profileEmail", username);
+        model.addAttribute("profileName",  username); // replace with real name if stored
+
+        return "profile"; // → templates/profile.html
     }
 
 

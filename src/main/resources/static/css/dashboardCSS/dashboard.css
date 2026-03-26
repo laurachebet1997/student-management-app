@@ -3,10 +3,10 @@
     display:flex;
     align-items:flex-start;
     justify-content:space-between;
-    margin-bottom:24px;
+    margin-bottom:15px;
     flex-wrap:wrap;
     gap:8px;
-    padding-top: 10px;
+    padding-top: 13px;
 }
 .dash-welcome__title {
     font-size:30px; font-weight: bold ; color:var(--text-main); letter-spacing:-0.4px; margin-bottom:4px; }
@@ -33,7 +33,7 @@
 .stat-cards {
     display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 .stat-card {
-    background:#fff; border:1px solid var(--border); border-radius: 10px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:var(--shadow-sm); transition:box-shadow 0.2s,transform 0.2s; }
+    background:#e9ecef; border:1px solid var(--border); border-radius: 10px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:var(--shadow-sm); transition:box-shadow 0.2s,transform 0.2s; }
 .stat-card:hover {
     box-shadow:var(--shadow-md); transform:translateY(-2px); }
 .stat-card__info {

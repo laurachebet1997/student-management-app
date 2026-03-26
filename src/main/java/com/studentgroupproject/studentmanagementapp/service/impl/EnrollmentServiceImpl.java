@@ -45,6 +45,50 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         this.courseRepository = courseRepository;
         this.mapper = mapper;
     }
+    @Override
+    public EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId) {
+
+        return studentRepository.findEnrolledStudentCourseDetails(studentId)
+                .map(student -> {
+
+                    EnrollmentSummaryDTO dto = new EnrollmentSummaryDTO();
+
+                    dto.setStudentId(student.getId());
+                    dto.setStudentName(student.getFirstName() + " " + student.getLastName());
+                    dto.setEmail(student.getEmail());
+
+                    dto.setCourseCount(student.getEnrollments().size());
+
+                    BigDecimal totalFee = student.getEnrollments().stream()
+                            .map(e -> e.getCourse().getFee())
+                            .filter(fee -> fee != null)
+                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                    dto.setTotalFee(totalFee);
+
+                    // mapping
+                    List<CourseDTO> courseList = student.getEnrollments().stream()
+                            .map(enrollment -> {
+
+                                CourseDTO courseDTO = new CourseDTO();
+
+                                courseDTO.setEnrollmentId(enrollment.getId());
+                                courseDTO.setCourseId(enrollment.getCourse().getId());
+                                courseDTO.setCourseName(enrollment.getCourse().getCourseName());
+                                courseDTO.setCourseCode(enrollment.getCourse().getCourseCode());
+                                courseDTO.setDescription(enrollment.getCourse().getDescription());
+                                courseDTO.setFee(enrollment.getCourse().getFee());
+
+                                return courseDTO;
+                            })
+                            .collect(Collectors.toList());
+
+                    dto.setCourseList(courseList);
+
+                    return dto;
+                })
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
 
 
     @Override
@@ -100,33 +144,33 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
 
-    @Override
-    public EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId) {
-        return studentRepository.findEnrolledStudentCourseDetails(studentId)
-                .map(student -> {
-                    EnrollmentSummaryDTO dto = new EnrollmentSummaryDTO();
-                    dto.setStudentId(student.getId());
-                    dto.setStudentName(student.getFirstName() + " "+student.getLastName());
-                    dto.setEmail(student.getEmail());
-
-                    dto.setCourseCount(student.getEnrollments().size());
-                    BigDecimal totalFee = student.getEnrollments().stream()
-                            .map(enrollment -> enrollment.getCourse().getFee())
-                            .filter(fee -> fee != null)
-                            .reduce(BigDecimal.ZERO, BigDecimal::add);
-                    dto.setTotalFee(totalFee);
-
-                    List<CourseDTO> courseList = student.getEnrollments().stream()
-                            .map(enrollment -> enrollment.getCourse())
-                            .map(course -> mapper.map(course, CourseDTO.class))
-                            .collect(Collectors.toList());
-
-                    dto.setCourseList(courseList);
-
-                    return dto;
-                })
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-    }
+//    @Override
+//    public EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId) {
+//        return studentRepository.findEnrolledStudentCourseDetails(studentId)
+//                .map(student -> {
+//                    EnrollmentSummaryDTO dto = new EnrollmentSummaryDTO();
+//                    dto.setStudentId(student.getId());
+//                    dto.setStudentName(student.getFirstName() + " "+student.getLastName());
+//                    dto.setEmail(student.getEmail());
+//
+//                    dto.setCourseCount(student.getEnrollments().size());
+//                    BigDecimal totalFee = student.getEnrollments().stream()
+//                            .map(enrollment -> enrollment.getCourse().getFee())
+//                            .filter(fee -> fee != null)
+//                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+//                    dto.setTotalFee(totalFee);
+//
+//                    List<CourseDTO> courseList = student.getEnrollments().stream()
+//                            .map(enrollment -> enrollment.getCourse())
+//                            .map(course -> mapper.map(course, CourseDTO.class))
+//                            .collect(Collectors.toList());
+//
+//                    dto.setCourseList(courseList);
+//
+//                    return dto;
+//                })
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//    }
 
 
     @Override
@@ -153,6 +197,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .getContent();
     }
 
+    @Override
+    public void deleteById(Long id) {
+        if (!enrollmentRepository.existsById(id)) {
+            throw new RuntimeException("Student not found");
+        }
+        enrollmentRepository.deleteById(id);
+    }
 
 
 }

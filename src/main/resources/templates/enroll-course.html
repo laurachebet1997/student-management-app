@@ -14,18 +14,17 @@
 
   <!-- ── Main Area -->
   <div class="main-area">
-    <main class="page-content">
-      <!-- ── Page Header -->
-      <div class="sms-page-header">
-        <div>
-          <h1 class="sms-page-title">Enroll Student to Courses</h1>
-          <p class="sms-page-sub"></p>
-        </div>
-        <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
-          <i class="bi bi-arrow-left"></i> Back to Students
-        </a>
+    <!-- ── Page Header -->
+    <div class="sms-page-header">
+      <div>
+        <h1 class="sms-page-title">Enroll Student to Courses</h1>
+        <p class="sms-page-sub"></p>
       </div>
-
+      <a th:href="@{/students/list}" class="sms-btn sms-btn-ghost">
+        <i class="bi bi-arrow-left"></i> Back to Students
+      </a>
+    </div>
+    <main class="page-content">
       <!-- ── Form  -->
       <form th:action="@{/enrollments/enrollCourse}"
             th:object="${enrollmentDto}"

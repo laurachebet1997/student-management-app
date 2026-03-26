@@ -24,6 +24,8 @@ public interface StudentRepository extends JpaRepository<Students, Long> {
 
     List<Students> findByActiveTrue();
 
+	Page<Students> findAll(Pageable pageable);
+
 
     @EntityGraph(attributePaths = {"enrollments", "enrollments.course"})
     @Query(value = """                      
@@ -49,4 +51,5 @@ public interface StudentRepository extends JpaRepository<Students, Long> {
 			""")
     Optional<Students> findEnrolledStudentCourseDetails(@Param("id") Long id);
 
+	Students findByEmailIgnoreCase(String mail);
 }

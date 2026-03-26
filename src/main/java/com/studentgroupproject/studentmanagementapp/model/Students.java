@@ -39,7 +39,7 @@ public class Students {
     private String address;
 
     @Column(name = "active", nullable = false)
-    private boolean active = true;
+    private boolean active;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -50,7 +50,7 @@ public class Students {
     @PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now();
-        active = true;
+        /*active = true;*/
     }
 
     public Long getId() {

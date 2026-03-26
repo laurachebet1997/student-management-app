@@ -13,21 +13,19 @@
   <div th:replace="~{fragments/layout :: sidebar('courses')}"></div>
 
   <div id="page-content-wrapper" >
+      <!-- ── Page Header ───────────────────────────── -->
+      <div class="sms-page-header">
+          <div>
+              <h1 class="sms-page-title">Course Details</h1>
+              <p class="sms-page-sub">Viewing full information for this course.</p>
+          </div>
+          <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
+              <i class="bi bi-arrow-left"></i> Back to List
+          </a>
+      </div>
   <!-- ── Main Area -->
   <div class="main-area">
       <main class="page-content">
-
-      <!-- ── Page Header ───────────────────────────── -->
-      <div class="sms-page-header">
-        <div>
-          <h1 class="sms-page-title">Course Details</h1>
-          <p class="sms-page-sub">Viewing full information for this course.</p>
-        </div>
-        <a th:href="@{/course/list}" class="sms-btn sms-btn-ghost">
-          <i class="bi bi-arrow-left"></i> Back to List
-        </a>
-      </div>
-
       <!-- ── Detail Card ────────────────────────────── -->
       <div class="sms-card detail-card">
 
