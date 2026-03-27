@@ -50,7 +50,7 @@
                                 <i class="bi bi-search"></i>
                                 <input type="text"
                                        id="tableSearchInput"
-                                       placeholder="Search"
+                                       placeholder="Search using courseCode..."
                                        autocomplete="off"/>
                             </div>
                         </div>
@@ -245,9 +245,6 @@
 
             // Loop through all table rows
             for (let i = 0; i < rows.length; i++) {
-                // Assuming:
-                // Column 2 is Email (index 2)
-                // Column 3 is Course Code (index 3)
                // const emailCell = rows[i].getElementsByTagName('td')[2];
                 const courseCell = rows[i].getElementsByTagName('td')[3];
 
