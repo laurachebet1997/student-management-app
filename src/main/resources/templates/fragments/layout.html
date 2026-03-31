@@ -179,13 +179,24 @@
 
             // ── Global search (client-side highlight helper) ──
             // Each page can listen to 'sms:search' event with the query string
-            const searchInput = document.getElementById('globalSearch');
-            searchInput?.addEventListener('input', () => {
-                document.dispatchEvent(new CustomEvent('sms:search', {
-                    detail: { query: searchInput.value.toLowerCase() }
-                }));
+             const searchInput = document.getElementById('globalSearch');
+            document.addEventListener('sms:search', (e) => {
+                const query = e.detail.query;
+                const rows = document.querySelectorAll('table tbody tr');
+
+                rows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(query) ? "" : "none";
+                });
             });
-        });
+
+            //      searchInput?.addEventListener('input', () => {
+        //          document.dispatchEvent(new CustomEvent('sms:search', {
+        //              detail: { query: searchInput.value.toLowerCase() }
+        //          }));
+        //      });
+         });
+
     </script>
 </th:block>
 
