@@ -48,6 +48,7 @@ public class DataInitializer {
                 course.setCourseCode("CS");
                 course.setDuration("3 years");
                 course.setActive(true);
+                course.setCourseCF(4) ;
                 course.setFee(new BigDecimal("100000"));
                 course.setDescription("Mathematics and Computer") ;
                 courseRepository.save(course);
@@ -58,6 +59,7 @@ public class DataInitializer {
                 course.setCourseCode("BS");
                 course.setDuration("2 years");
                 course.setActive(true);
+                course.setCourseCF(3) ;
                 course.setFee(new BigDecimal("30000"));
                 course.setDescription("Business and Finance") ;
                 courseRepository.save(course);
@@ -68,6 +70,7 @@ public class DataInitializer {
                 course.setCourseCode("NS");
                 course.setDuration("4 years");
                 course.setActive(true);
+                course.setCourseCF(4) ;
                 course.setFee(new BigDecimal("60000"));
                 course.setDescription("Health and Hospitality") ;
                 courseRepository.save(course);
@@ -78,6 +81,7 @@ public class DataInitializer {
                 course.setCourseCode("LW");
                 course.setDuration("5 years");
                 course.setActive(true);
+                course.setCourseCF(3) ;
                 course.setFee(new BigDecimal("80000"));
                 course.setDescription("Legal education on practice of law") ;
                 courseRepository.save(course);
@@ -88,6 +92,7 @@ public class DataInitializer {
                 course.setCourseCode("EN");
                 course.setDuration("6 years");
                 course.setActive(true);
+                course.setCourseCF(4) ;
                 course.setFee(new BigDecimal("70000"));
                 course.setDescription("Engineering Science") ;
                 courseRepository.save(course);
@@ -100,6 +105,7 @@ public class DataInitializer {
                 student.setLastName("Gituya");
                 student.setEmail("peter@gmail.com");
                 student.setPhoneNumber("+254745841707") ;
+                student.setEnrollmentYear(1);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -110,6 +116,7 @@ public class DataInitializer {
                 student.setLastName("Omoro");
                 student.setEmail("becky@gmail.com");
                 student.setPhoneNumber("+254708737725") ;
+                student.setEnrollmentYear(2);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -120,6 +127,7 @@ public class DataInitializer {
                 student.setLastName("Chebet");
                 student.setEmail("laura@gmail.com");
                 student.setPhoneNumber("+254740953906") ;
+                student.setEnrollmentYear(4);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -130,6 +138,7 @@ public class DataInitializer {
                 student.setLastName("Student");
                 student.setEmail("inactive@gmail.com");
                 student.setPhoneNumber("+254712345678") ;
+                student.setEnrollmentYear(3);
                 student.setAddress("Kabarak") ;
                 student.setActive(false);
                 studentRepository.save(student);
@@ -140,6 +149,7 @@ public class DataInitializer {
                 student.setLastName("Me");
                 student.setEmail("deleteMe@gmail.com");
                 student.setPhoneNumber("+254712345678") ;
+                student.setEnrollmentYear(1);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -150,6 +160,7 @@ public class DataInitializer {
                 student.setLastName("Me");
                 student.setEmail("updateMe@gmail.com");
                 student.setPhoneNumber("+254712345678") ;
+                student.setEnrollmentYear(2);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -160,6 +171,7 @@ public class DataInitializer {
                 student.setLastName("Me");
                 student.setEmail("enrollMe@gmail.com");
                 student.setPhoneNumber("+254712345678") ;
+                student.setEnrollmentYear(1);
                 student.setAddress("Kabarak") ;
                 student.setActive(true);
                 studentRepository.save(student);
@@ -171,6 +183,7 @@ public class DataInitializer {
                 student.setLastName("Me");
                 student.setEmail("activateMe@gmail.com");
                 student.setPhoneNumber("+254712345678") ;
+                student.setEnrollmentYear(1);
                 student.setAddress("Kabarak") ;
                 student.setActive(false);
                 studentRepository.save(student);

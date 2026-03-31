@@ -41,6 +41,16 @@ public class CourseDTO {
 
     private Long enrollmentId;
 
+    public Integer getCourseCF() {
+        return courseCF;
+    }
+
+    public void setCourseCF(Integer courseCF) {
+        this.courseCF = courseCF;
+    }
+
+    private Integer courseCF;
+
     public boolean isActive() {
         return active;
     }

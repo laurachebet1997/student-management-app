@@ -53,6 +53,17 @@ public class Students {
         /*active = true;*/
     }
 
+    public Integer getEnrollmentYear() {
+        return enrollmentYear;
+    }
+
+    public void setEnrollmentYear(Integer enrollmentYear) {
+        this.enrollmentYear = enrollmentYear;
+    }
+
+    private Integer enrollmentYear;
+
+
     public Long getId() {
         return id;
     }
@@ -125,6 +136,8 @@ public class Students {
     public void setEnrollments(Set<Enrollment> enrollments) {
         this.enrollments = enrollments;
     }
+
+
 
 
 

@@ -123,6 +123,27 @@
                                       th:errors="*{fee}"></span>
                             </div>
 
+                            <div class="field-group">
+                                <label for="courseCF" class="field-label">
+                                    CF <span class="required-star">*</span>
+                                </label>
+                                <div class="field-input-wrap">
+                                    <i class="bi bi-archive-fill"></i>
+                                    <input type="number"
+                                           step="0.01"
+                                           min="1"
+                                           th:field="*{courseCF}"
+                                           id="courseCF"
+                                           class="field-input"
+                                           th:classappend="${#fields.hasErrors('courseCF')} ? ' field-input--error'"
+                                           placeholder="e.g. 1-3"
+                                           required/>
+                                </div>
+                                <span class="field-error"
+                                      th:if="${#fields.hasErrors('courseCF')}"
+                                      th:errors="*{courseCF}"></span>
+                            </div>
+
                         </div>
 
                         <!-- Row 3: Description (full width) -->

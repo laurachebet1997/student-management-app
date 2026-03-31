@@ -1,10 +1,10 @@
-# 📚 Student Course Registration System
+#  Student Management System
 
-A comprehensive, enterprise-grade Spring Boot web application designed for efficient student enrollment management, course administration, and comprehensive system monitoring. This application demonstrates advanced software engineering practices with clean architecture, secure authentication, and intuitive user interfaces.
+A comprehensive, enterprise-grade Spring Boot web application designed for efficient student enrollment management, course administration, and comprehensive system monitoring.
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 1. [Project Overview](#project-overview)
 2. [Key Features](#key-features)
@@ -24,10 +24,10 @@ A comprehensive, enterprise-grade Spring Boot web application designed for effic
 ##  Project Overview
 
 ### Project Title
-**Student Course Registration System (SCRS)**
+**Student Management System (SMS)**
 
 ### Description
-The Student Course Registration System is a full-stack web application that provides a complete solution for managing student enrollments, course administration, and academic operations. Built with modern Spring Boot technologies and MySQL database, the system ensures data integrity, security, and optimal performance.
+The Student Management System is a full-stack web application that provides a complete solution for managing student enrollments, course administration, and academic operations. Built with modern Spring Boot technologies and MySQL database, the system ensures data integrity, security, and optimal performance.
 
 **Key Objectives:**
 - Streamline student course registration process
@@ -241,6 +241,7 @@ The application follows the **Model-View-Controller (MVC)** design pattern combi
    - Automatic timestamp tracking with `@PrePersist`
 
 ### 8. **Model-Mapper Integration**
+   - DAO  (Data Access Object) pattern support
    - DTO (Data Transfer Object) pattern support
    - Separation of internal models from API responses
    - Data validation and transformation
@@ -481,6 +482,7 @@ studentmanagementappProject/
 │   │   │       │   ├── ProfileController.java
 │   │   │       │   ├── StaticPageController.java
 │   │   │       │   └── StudentProfileViewController.java
+│   │   │       │── dao/ (Data Access Objects)
 │   │   │       ├── dto/ (Data Transfer Objects)
 │   │   │       ├── config/ (Spring Configuration Classes)
 │   │   │       ├── exception/ (Exception Handling)
@@ -796,18 +798,22 @@ This project is provided for educational purposes as part of academic coursework
 ## 👥 Project Team & Acknowledgments
 
 **Development Team:** Student Group Project  
-**Institution:** [Your Institution Name]  
-**Supervised By:** [Supervisor Name]  
-**Academic Year:** 2024-2025
+**Institution:** KABARAK UNIVERSITY  
+**Supervised By:** Mercy Gachoka  
+**Academic Year:** 4th year
 
 **Special Thanks:**
+- Group Members: 
+      Laura Chebet
+      Rebbecca Omoro
+      Peter Gituya
 - Spring Framework community for excellent documentation
 - MySQL community for reliable database
 - IntelliJ IDEA team for powerful IDE support
 
 ---
 
-## ✅ Project Completion Status
+##  Project Completion Status
 
 - ✅ Core Features Implemented
 - ✅ Database Schema Design

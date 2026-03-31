@@ -56,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
     public Page<StudentDTO> getStudents(int page, int size) {
         log.info("list of student from: {}", page);
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.DESC, "id"));
         /*return studentRepository.findByActiveTrue(pageRequest)
                 .map(student -> mapper.map(student, StudentDTO.class));*/
         return studentRepository.findAll(pageRequest)

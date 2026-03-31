@@ -74,6 +74,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
+                  <th>Year</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -113,6 +114,12 @@
                   <!-- Phone -->
                   <td>
                     <span class="cell-text" th:text="${student.phoneNumber}">+254700000000</span>
+                  </td>
+
+                  <!--year -->
+
+                  <td>
+                    <span class="cell-text" th:text="${student.enrollmentYear}">2</span>
                   </td>
 
                   <!-- Status -->

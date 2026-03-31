@@ -74,6 +74,7 @@
                                 <th>Course ID</th>
                                 <th>Course Name</th>
                                 <th>Course Code</th>
+                                <th> CF</th>
                                 <th>Fees</th>
                                 <th>Duration</th>
                                 <th>Actions</th>
@@ -107,6 +108,11 @@
                                 <!-- Course Code -->
                                 <td>
                                     <span class="code-badge" th:text="${course.courseCode}">CS101</span>
+                                </td>
+
+                                <!-- Course CF -->
+                                <td>
+                                    <span class="code-badge" th:text="${course.courseCF}">3</span>
                                 </td>
 
                                 <!-- Fees -->

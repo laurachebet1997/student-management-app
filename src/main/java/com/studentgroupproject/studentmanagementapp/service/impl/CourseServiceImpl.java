@@ -66,7 +66,7 @@ public class CourseServiceImpl implements CourseService {
     public Page<CourseDTO> getCourses(int page, int size) {
         log.info("list of course from: {}", page);
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Direction.DESC, "id"));
         /*return courseRepository.findByActiveTrue(pageRequest)
                 .map(course -> mapper.map(course, CourseDTO.class));*/
         return courseRepository.findAll(pageRequest)

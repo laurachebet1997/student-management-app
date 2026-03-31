@@ -55,6 +55,16 @@ public class Courses {
         createdAt = LocalDateTime.now();
     }
 
+    public Integer getCourseCF() {
+        return courseCF;
+    }
+
+    public void setCourseCF(Integer courseCF) {
+        this.courseCF = courseCF;
+    }
+
+    private Integer courseCF;
+
     public Long getId() {
         return id;
     }

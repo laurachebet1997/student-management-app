@@ -25,6 +25,16 @@ public class StudentDTO {
 
     private boolean active;
 
+    public Integer getEnrollmentYear() {
+        return enrollmentYear;
+    }
+
+    public void setEnrollmentYear(Integer enrollmentYear) {
+        this.enrollmentYear = enrollmentYear;
+    }
+
+    private Integer enrollmentYear;
+
 
     public Long getId() {
         return id;
